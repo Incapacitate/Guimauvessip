@@ -1,0 +1,77 @@
+<div class="card border-info m-5 text-center">
+  <div class="card-header">
+    <h1><i class="fas fa-user"></i> <u><%= @user.first_name + " " + @user.last_name  %></u></h1>
+  </div>
+  <div class="card-body text-info">
+    <ul class="card-text list-group">
+      <li class="list-group-item">Prénom : <%= @user.first_name %></li>
+      <li class="list-group-item">Nom : <%= @user.last_name %></li>
+      <li class="list-group-item">Description : <%= @user.description %></li>
+      <li class="list-group-item">Email : <%= @user.email %></li>
+      <li class="list-group-item">Âge : <%= @user.age %></li>
+      <li class="list-group-item">Ville : <%= link_to @user.city.name , city_path(@user.city.id),:class => ""%></li>
+    </ul>
+  </div>
+  <div>
+    <%= link_to "ville de " + @user.city.name , city_path(@user.city.id),:class => "btn-info btn m-2"%>
+  </div>
+</div>
+
+<!-- affichage des potins -->
+<h2 class="text-center mb-5"><i class="far fa-newspaper"></i> Potins de <%= @user.first_name %> </h2>
+<div class="card-columns border-info container">
+  <% @user.gossips.each do |i| %>
+    <div class="card">
+      <div class="card-header pb-1 d-flex">
+        <h5 class="card-title"><%= i.title %></h5>
+        <div class="ml-auto">
+          <span class="badge badge-secondary"><i class="fas fa-comments"></i> <%= i.comments.count %></span>
+          <span class="badge badge-secondary"><i class="fas fa-heart"></i> <%= i.likes.count %></span>
+        </div>
+      </div>
+      <div class="card-body text-center">
+        <h6 class="card-subtitle mb-2 text-muted">" <%= i.content %> "</h6>
+        <%= link_to "Go Potin", gossip_path(i.id),:class => "btn-info btn p-1"%>
+      </div>
+    </div>
+  <% end %>
+</div>
+<hr>
+
+<!-- affichage des potins likés-->
+<% if @user.likes.count > 0 %>
+  <h2 class="text-center mb-5"><i class="fas fa-heart"></i> Potins likés </h2>
+  <div class="card-columns border-info container">
+    <% @user.likes.each do |i| %>
+      <div class="card">
+        <div class="card-header pb-1 d-flex">
+          <h5 class="card-title"><%= i.gossip.title %></h5>
+          <div class="ml-auto">
+            <span class="badge badge-secondary"><i class="fas fa-comments"></i> <%= i.gossip.comments.count %></span>
+            <span class="badge badge-secondary"><i class="fas fa-heart"></i> <%= i.gossip.likes.count %></span>
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <h6 class="card-subtitle mb-2 text-muted">" <%= i.gossip.content %> "</h6>
+          <%= link_to "Go Potin", gossip_path(i.gossip.id),:class => "btn-info btn p-1"%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <hr>
+<% end %>
+
+<!-- affichage des commentaires-->
+<% if @user.comments.count > 0 %>
+  <h2 class="text-center mb-5"><i class="far fa-comments"></i> Commentaires </h2>
+  <div class="card-columns border-info container">
+    <% @user.comments.each do |i| %>
+      <div class="card">
+        <div class="card-body text-center">
+          <h6 class="card-subtitle mb-2 text-muted">" <%= i.content %> "</h6>
+          <%= link_to "Go Potin", gossip_path(i.gossip.id),:class => "btn-info btn p-1"%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

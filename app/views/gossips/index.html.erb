@@ -1,0 +1,33 @@
+<% if flash.now[:notice] %>
+<div class="alert alert-success">
+  <div class="notice">
+    <%= flash.now[:notice] %>
+    <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+<% end %>
+
+  <h1 class="text-center m-4"><i class="fas fa-comments"></i> Tous les potins</h1>
+
+<!-- affichage des gossips -->
+  <div class="card-columns border-info container ">
+  <% @gossips.each do |i| %>
+    <div class="card">
+      <div class="card-header pb-1 d-flex">
+        <h5 class="card-title"><%= i.title %></h5>
+        <div class="ml-auto">
+          <span class="badge badge-secondary"><i class="fas fa-comments"></i> <%= i.comments.count %></span>
+          <span class="badge badge-secondary"><i class="fas fa-heart"></i> <%= i.likes.count %></span>
+        </div>
+
+      </div>
+      <div class="card-body text-center">
+        <p class="card-subtitle mb-2 text-info">" <%= i.content %> "</p>
+        <p class="card-subtitle mb-2 text-muted"><em>de <%= i.user.first_name %></em></p>
+        <%= link_to "Go Potin", gossip_path(i.id),:class => "btn-info btn p-1"%>
+      </div>
+    </div>
+  <% end %>
+</div>

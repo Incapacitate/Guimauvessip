@@ -1,0 +1,28 @@
+<div class="card border-info m-5">
+ <div class="card-header">
+  <h1>Ajouter un potin</h1>
+  </div>
+  <%= form_tag url_for(action: 'create'), method: "post" do %>
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+      <div class="card-body text-info">
+        <div class="form-group">
+          <%= text_field_tag 'title', @gossip.title, class: "form-control", placeholder: "Le titre de ton potin" %>
+          <%= text_area_tag 'content', @gossip.content, class: "form-control", placeholder: "Ton potin" %>
+          <br /> <br />
+
+          <%= submit_tag "Ajouter mon potin", class: "btn btn-info" %>
+        <% end %>
+      </div>
+    </div>
+</div>
+    <% if @gossip.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+        <p>Nous n'avons pas réussi à créer le potin pour la (ou les) raison(s) suivante(s) :</p>
+        <ul>
+          <% @gossip.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+    </div>
+      <% end %>

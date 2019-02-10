@@ -1,0 +1,35 @@
+<div class="card border-info m-5">
+ <div class="card-header"><h1><i class="fas fa-edit"></i> Édite le potin n° <%= params[:id] %></h1></div>
+
+  <%= form_tag url_for(action: 'update'), method: "patch" do %>
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+      <div class="card-body text-info">
+        <div class="form-group">
+          <%= label_tag 'Titre'%>
+          <%= text_field_tag :title, @gossip.title, class:'form-control', placeholder: @gossip.title %>
+          <br /> <br />
+
+          <%= label_tag 'Contenu du potin' %>
+          <%= text_area_tag :content, @gossip.content, class:'form-control', placeholder: @gossip.content %>
+          <br /> <br />
+
+          <%= submit_tag "Éditer le potin", class: "btn btn-info" %>
+        <% end %>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<% if @gossip.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+        <p>Nous n'avons pas réussi à modifier le potin pour la (ou les) raison(s) suivante(s) :</p>
+        <ul>
+          <% @gossip.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+    </div>
+      <% end %>
